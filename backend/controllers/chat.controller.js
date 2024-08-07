@@ -55,7 +55,7 @@ export const chat = async (req, res) => {
 export const getUserChats = async (req, res) => {
   const userId = req.auth.userId;
   try {
-    const userChats = await UserChats.find({ userId });
+    const userChats = await UserChats.find({ userId }).sort({ createdAt: -1 });
 
     if (!userChats || !userChats.length === 0) {
       return res.status(200).send(null);
