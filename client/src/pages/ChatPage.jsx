@@ -18,8 +18,8 @@ const ChatPage = () => {
   });
 
   return (
-    <div className="w-full h-full flex flex-col items-center relative p-5">
-      <div className="flex-1 overflow-y-auto w-full flex justify-center px-2">
+    <div className="w-full h-full flex flex-col items-center relative p-5 overflow-x-hidden">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden w-full flex justify-center px-2">
         <div className="w-full flex flex-col gap-5">
           {isPending ? (
             <div className="flex justify-center items-center text-2xl font-semibold">

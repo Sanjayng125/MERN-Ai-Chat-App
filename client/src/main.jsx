@@ -9,10 +9,12 @@ import SignupPage from "./pages/SignupPage.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
+import ErrorBoundary from "./ErrorBoundary.jsx";
 
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
+    errorElement: <ErrorBoundary />,
     children: [
       {
         path: "/",

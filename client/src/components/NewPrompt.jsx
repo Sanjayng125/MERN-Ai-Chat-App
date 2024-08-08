@@ -134,12 +134,12 @@ const NewPrompt = ({ data }) => {
         />
       )}
       {question && (
-        <div className="message user bg-slate-900 rounded-[20px] max-w-[80%] self-end p-5">
+        <div className="message user bg-slate-900 rounded-[20px] max-w-[80%] self-end p-5 break-all">
           {question}
         </div>
       )}
       {answer && (
-        <div className="message p-5">
+        <div className="message p-5 break-all">
           <MarkDown>{answer}</MarkDown>
         </div>
       )}
