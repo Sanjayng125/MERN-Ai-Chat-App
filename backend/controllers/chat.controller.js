@@ -55,13 +55,20 @@ export const chat = async (req, res) => {
 export const getUserChats = async (req, res) => {
   const userId = req.auth.userId;
   try {
-    const userChats = await UserChats.find({ userId }).sort({ createdAt: -1 });
+    const userChats = await UserChats.find({ userId });
 
     if (!userChats || !userChats.length === 0) {
       return res.status(200).send(null);
     }
 
-    return res.status(200).send(userChats[0]?.chats);
+    if (userChats[0]?.chats?.length > 0) {
+      const sorted = userChats[0]?.chats.sort(
+        (a, b) => b.createdAt - a.createdAt
+      );
+      return res.status(200).send(sorted);
+    }
+
+    return res.status(200).send(null);
   } catch (error) {
     console.log(error);
     return res.status(500).send("Error Getting User Chats: ", error);

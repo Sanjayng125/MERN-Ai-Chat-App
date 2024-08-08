@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
 
   const mutation = useMutation({
     mutationFn: (text) => {
@@ -23,6 +24,7 @@ const DashboardPage = () => {
     onSuccess: (chatId) => {
       queryClient.invalidateQueries({ queryKey: ["userchats"] });
       navigate(`/dashboard/c/${chatId}`);
+      setLoading(false);
     },
   });
 
@@ -35,7 +37,10 @@ const DashboardPage = () => {
       return;
     }
 
-    mutation.mutate(text);
+    if (!loading) {
+      mutation.mutate(text);
+    }
+    setLoading(true);
   };
 
   return (

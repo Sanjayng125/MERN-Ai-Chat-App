@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { FaBars, FaRobot } from "react-icons/fa";
 import { useStore } from "../context/ZustandStore";
 import { ClerkProvider, SignedIn, UserButton } from "@clerk/clerk-react";
@@ -16,8 +16,15 @@ const queryClient = new QueryClient();
 
 const RootLayout = () => {
   const { showSideBar, setShowSideBar } = useStore();
+  const navigate = useNavigate();
+
   return (
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+    <ClerkProvider
+      publishableKey={PUBLISHABLE_KEY}
+      afterSignOutUrl="/"
+      routerPush={(to) => navigate(to)}
+      routerReplace={(to) => navigate(to, { replace: true })}
+    >
       <QueryClientProvider client={queryClient}>
         <div className="w-full h-screen flex flex-col p-3 md:py-4 md:px-10 bg-slate-900 text-white">
           <header className="flex items-center justify-between mb-2">
