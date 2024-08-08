@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FaArrowUp } from "react-icons/fa";
+import { FaArrowUp, FaSpinner } from "react-icons/fa";
 import { IKImage } from "imagekitio-react";
 import MarkDown from "react-markdown";
 import model from "../lib/Gemini";
@@ -15,9 +15,11 @@ const NewPrompt = ({ data }) => {
     dbData: {},
     aiData: {},
   });
+  const [loading, setLoading] = useState(false);
+
   const messagesEndRef = useRef(null);
   const formRef = useRef(null);
-  const [loading, setLoading] = useState(false);
+  const responseRef = useRef("");
 
   const chat = model.startChat({
     history: [
@@ -82,11 +84,14 @@ const NewPrompt = ({ data }) => {
       const result = await chat.sendMessageStream(
         Object.entries(image.aiData).length ? [image.aiData, prompt] : [prompt]
       );
-      let streamingText = "";
+      // let streamingText = "";
+      responseRef.current = "";
       for await (const chunk of result.stream) {
         const chunkText = chunk.text();
-        streamingText += chunkText;
-        setAnswer(streamingText);
+        // streamingText += chunkText;
+        // setAnswer(streamingText);
+        responseRef.current += chunkText;
+        setAnswer(responseRef.current);
       }
 
       mutation.mutate();
@@ -158,8 +163,11 @@ const NewPrompt = ({ data }) => {
           autoComplete="off"
           className="w-full p-5 border-none outline-none bg-transparent text-[#ececec]"
         />
-        <button className="w-max bg-[#605e68] rounded-full border-none cursor-pointer p-2 flex items-center justify-center">
-          <FaArrowUp />
+        <button
+          disabled={loading}
+          className="w-max bg-[#605e68] rounded-full border-none cursor-pointer p-2 flex items-center justify-center"
+        >
+          {loading ? <FaSpinner className="animate-spin" /> : <FaArrowUp />}
         </button>
       </form>
     </>

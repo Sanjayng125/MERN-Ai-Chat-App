@@ -83,7 +83,7 @@ export const getChat = async (req, res) => {
     return res.status(200).send(chat);
   } catch (error) {
     console.log(error);
-    return res.status(500).send("Error Fetching Chat: ", error);
+    return res.status(500).send("Error Fetching Chat: " + error);
   }
 };
 

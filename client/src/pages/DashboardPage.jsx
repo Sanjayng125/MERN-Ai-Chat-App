@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { FaArrowUp } from "react-icons/fa";
+import { FaArrowUp, FaSpinner } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
@@ -65,8 +65,11 @@ const DashboardPage = () => {
             autoComplete="off"
             className="flex-1 p-5 bg-transparent border-none outline-none"
           />
-          <button className="bg-[#605e68] rounded-full border-none cursor-pointer p-2 flex items-center justify-center mr-5">
-            <FaArrowUp />
+          <button
+            disabled={loading}
+            className="bg-[#605e68] rounded-full border-none cursor-pointer p-2 flex items-center justify-center mr-5"
+          >
+            {loading ? <FaSpinner className="animate-spin" /> : <FaArrowUp />}
           </button>
         </form>
       </div>
